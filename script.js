@@ -19,7 +19,7 @@ function gethumanchoice() {
     }
     else {
         console.log("invalid answer, please enter Rock, Paper or Scissors");
-        gethumanchoice();
+        return gethumanchoice();
     }
 }
 
