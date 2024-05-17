@@ -2,20 +2,19 @@ console.log("hello")
 // create a rule to select rock paper or scissors based on numbers from 1 to 100 for the machine// 
 function getcomputerchoice() {
     if (Math.random() * 100 < 33) {
-        return "Rock"
+        return "Rock";
     } else if (Math.random() * 100 < 66) {
-        return "Paper"
+        return "Paper";
     } else {
-        return "Scissors"
+        return "Scissors";
     }
 }
-console.log(getcomputerchoice())
+
 
 // create a prompt thing to let people input their choice , limit it so it can only be rock paper or tijeras//
 function gethumanchoice() {
     let answer = prompt("Letś play Rock, Paper, Scissors. Pick your choice!").toLowerCase().slice(0)
     if (answer === "rock" || answer === "paper" || answer === "scissors") {
-        console.log(answer.at(0).toUpperCase() + answer.slice(1))
         return answer.at(0).toUpperCase() + answer.slice(1);
     }
     else {
@@ -29,26 +28,32 @@ let humanscore = 0
 let computerscore = 0
 
 function playround() {
-    if (getcomputerchoice().toLowerCase() === "rock" && gethumanchoice().toLowerCase() === "paper") {
-        humanscore++
+    let computerChoice = getcomputerchoice().toLowerCase();
+    let humanChoice = gethumanchoice().toLowerCase();
+   console.log(computerChoice)
+   console.log(humanChoice)
+
+    if (computerChoice === "rock" && humanChoice === "paper") {
+        humanscore++;
     }
-    else if (getcomputerchoice().toLowerCase() === "rock" && gethumanchoice().toLowerCase() === "scissors") {
-        computerscore++
+    else if (computerChoice === "rock" && humanChoice === "scissors") {
+        computerscore++;
     }
-    else if (getcomputerchoice().toLowerCase() === "paper" && gethumanchoice().toLowerCase() === "rock") {
-        computerscore++
+    else if (computerChoice === "paper" && humanChoice === "rock") {
+        computerscore++;
     }
-    else if (getcomputerchoice().toLowerCase() === "paper" && gethumanchoice().toLowerCase() === "scissors") {
-        humanscore++
+    else if (computerChoice === "paper" && humanChoice === "scissors") {
+        humanscore++;
     }
-    else if (getcomputerchoice().toLowerCase() === "scissors" && gethumanchoice().toLowerCase() === "rock") {
-        humanscore++
+    else if (computerChoice === "scissors" && humanChoice === "rock") {
+        humanscore++;
     }
-    else if (getcomputerchoice().toLowerCase() === "scissors" && gethumanchoice().toLowerCase() === "paper")
-    computerscore++;
-    console.log(humanscore)
-    console.log(computerscore)
-    return {humanscore, computerscore}
+    else if (computerChoice === "scissors" && humanChoice === "paper") {
+    computerscore++;}
+
+    console.log("computer " + computerscore);
+    console.log("human " + humanscore);
+    return [humanscore, computerscore];
 }
 playround()
 
