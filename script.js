@@ -30,33 +30,47 @@ let computerscore = 0
 function playround() {
     let computerChoice = getcomputerchoice().toLowerCase();
     let humanChoice = gethumanchoice().toLowerCase();
-   console.log(computerChoice)
-   console.log(humanChoice)
+   console.log("computer: " + computerChoice)
+   console.log("human: " + humanChoice)
 
     if (computerChoice === "rock" && humanChoice === "paper") {
-        humanscore++;
+        humanscore++; console.log("You win! Paper beats Rock!");
     }
     else if (computerChoice === "rock" && humanChoice === "scissors") {
-        computerscore++;
+        computerscore++; console.log("You Lose! Rock beats Scissors!");
     }
     else if (computerChoice === "paper" && humanChoice === "rock") {
-        computerscore++;
+        computerscore++; console.log("You Lose! Paper beats Rock!");
     }
     else if (computerChoice === "paper" && humanChoice === "scissors") {
-        humanscore++;
+        humanscore++; console.log("You win! Scissors beat Paper!");
     }
     else if (computerChoice === "scissors" && humanChoice === "rock") {
-        humanscore++;
+        humanscore++; console.log("You win! Rock beats Scissors!");
     }
     else if (computerChoice === "scissors" && humanChoice === "paper") {
-    computerscore++;}
+    computerscore++; console.log("You Lose! Scissors beat Paper!");
+    }
+    else {console.log("It's a tie!")}
 
     console.log("computer " + computerscore);
     console.log("human " + humanscore);
     return [humanscore, computerscore];
-}
-playround()
 
-// create the logic for the game, who wins and who loses , a lot of if if if//
+}
+
+
 // create a function that makes the game repeat itself 5 times and accumulate scores//
+
+function playGame(rounds) {
+    if (rounds > 0) {
+    playround();
+    playGame(rounds - 1);}
+    else { 
+        console.log("computer score: " + computerscore + " Human Score: " + humanscore)
+    }
+}
+
+let rounds = 5
+playGame(rounds)
 
