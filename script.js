@@ -1,76 +1,81 @@
 console.log("hello")
 // create a rule to select rock paper or scissors based on numbers from 1 to 100 for the machine// 
-function getcomputerchoice() {
+function getComputerChoice() {
     if (Math.random() * 100 < 33) {
-        return "Rock";
+        return "rock";
     } else if (Math.random() * 100 < 66) {
-        return "Paper";
+        return "paper";
     } else {
-        return "Scissors";
+        return "scissors";
     }
 }
 
 
 // create a prompt thing to let people input their choice , limit it so it can only be rock paper or tijeras//
-function gethumanchoice() {
-    let answer = prompt("Letś play Rock, Paper, Scissors. Pick your choice!").toLowerCase().slice(0)
-    if (answer === "rock" || answer === "paper" || answer === "scissors") {
-        return answer.at(0).toUpperCase() + answer.slice(1);
-    }
-    else {
-        console.log("invalid answer, please enter Rock, Paper or Scissors");
-        return gethumanchoice();
-    }
-}
+// function gethumanchoice() {
+//     let answer = prompt("Lets play Rock, Paper, Scissors. Pick your choice!").toLowerCase().slice(0)
+//     if (answer === "rock" || answer === "paper" || answer === "scissors") {
+//         return answer.at(0).toUpperCase() + answer.slice(1);
+//     }
+//     else {
+//         console.log("invalid answer, please enter Rock, Paper or Scissors");
+//         return gethumanchoice();
+//     }
+// }
+const buttons = document.querySelectorAll('button');
+const resultsDiv = document.getElementById('results');
+const scoreDiv = document.getElementById('score');
+
+buttons.forEach(button => {
+    button.addEventListener('click', () => {
+        playRound(button.id);
+    });
+});
 
 // keep track of the score, maybe create some variables that store scores or one variable that adds up for each player (the machine and the person)
-let humanscore = 0
-let computerscore = 0
+let humanScore = 0
+let computerScore = 0
 
-function playround() {
-    let computerChoice = getcomputerchoice().toLowerCase();
-    let humanChoice = gethumanchoice().toLowerCase();
-   console.log("computer: " + computerChoice)
-   console.log("human: " + humanChoice)
-
-    if (computerChoice === "rock" && humanChoice === "paper") {
-        humanscore++; console.log("You win! Paper beats Rock!");
+function playRound(humanChoice) {
+    const computerChoice = getComputerChoice();
+    let result = "";
+    if (humanChoice === computerChoice) {
+        result = "It's a tie!";
+    } else if (
+        (humanChoice === 'rock' && computerChoice === 'scissors') ||
+        (humanChoice === 'paper' && computerChoice === 'rock') ||
+        (humanChoice === 'scissors' && computerChoice === 'paper')
+    ) {
+        humanScore++;
+        result = `You win! ${capitalize(humanChoice)} beats ${capitalize(computerChoice)}.`;
+    } else {
+        computerScore++;
+        result = `You lose! ${capitalize(computerChoice)} beats ${capitalize(humanChoice)}.`;
     }
-    else if (computerChoice === "rock" && humanChoice === "scissors") {
-        computerscore++; console.log("You Lose! Rock beats Scissors!");
-    }
-    else if (computerChoice === "paper" && humanChoice === "rock") {
-        computerscore++; console.log("You Lose! Paper beats Rock!");
-    }
-    else if (computerChoice === "paper" && humanChoice === "scissors") {
-        humanscore++; console.log("You win! Scissors beat Paper!");
-    }
-    else if (computerChoice === "scissors" && humanChoice === "rock") {
-        humanscore++; console.log("You win! Rock beats Scissors!");
-    }
-    else if (computerChoice === "scissors" && humanChoice === "paper") {
-    computerscore++; console.log("You Lose! Scissors beat Paper!");
-    }
-    else {console.log("It's a tie!")}
 
-    console.log("computer " + computerscore);
-    console.log("human " + humanscore);
-    return [humanscore, computerscore];
-
-}
+    resultsDiv.textContent = result;
+    scoreDiv.textContent = `Player: ${humanScore} - Computer: ${computerScore}`;
 
 
-// create a function that makes the game repeat itself 5 times and accumulate scores//
-
-function playGame(rounds) {
-    if (rounds > 0) {
-    playround();
-    playGame(rounds - 1);}
-    else { 
-        console.log("computer score: " + computerscore + " Human Score: " + humanscore)
+    if (humanScore === 5 || computerScore === 5) {
+        announceWinner();
     }
 }
 
-let rounds = 5
-playGame(rounds)
+function capitalize(word) {
+    return word.charAt(0).toUpperCase() + word.slice(1);
+}
+
+function announceWinner() {
+    if (humanScore === 5) {
+        resultsDiv.textContent = 'Congratulations! You have won the game!';
+    } else {
+        resultsDiv.textContent = 'Sorry! The computer has won the game!';
+    }
+
+ // Disable buttons after the game is over
+ buttons.forEach(button => {
+    button.disabled = true;
+});
+}
 
